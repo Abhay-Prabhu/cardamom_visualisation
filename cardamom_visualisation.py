@@ -196,7 +196,8 @@ st.set_page_config(
 )
 
 # --- Data loading ---
-def load_data(path="test.csv"):
+def load_data(path="
+cardamom_price_dataset.csv"):
     df = pd.read_csv(path)
     df["Date of Auction"] = pd.to_datetime(df["Date of Auction"])
     df["Avg.Price (Rs./Kg)"] = pd.to_numeric(df["Avg.Price (Rs./Kg)"], errors="coerce")
