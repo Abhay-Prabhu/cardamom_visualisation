@@ -407,7 +407,7 @@ def main():
 
         # Shorten long auctioneer names
         qty["Auctioneer_short"] = qty["Auctioneer"].apply(
-            lambda x: x if len(x) <= 30 else x[:27] + '...'
+            lambda x: x if len(x) <= 10 else x[:10] + '...'
         )
 
         # Draw horizontal bar with values outside
