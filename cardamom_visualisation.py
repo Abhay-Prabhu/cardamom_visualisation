@@ -395,8 +395,17 @@ def main():
         tmp["Qty Sold (Kgs)"] = pd.to_numeric(tmp["Qty Sold (Kgs)"], errors="coerce").fillna(0)
         qty = tmp.groupby("Auctioneer")["Qty Sold (Kgs)"].sum().reset_index()
         qty["Qty Sold (t)"] = qty["Qty Sold (Kgs)"] / 1000
+        agg = (
+            data.groupby("Quantity")["Avg.Price (Rs./Kg)"].mean()
+            .sort_values(ascending=False)
+            .reset_index()
+        )
+        # Shorten long auctioneer names
+        agg["Auctioneer_short"] = agg["Auctioneer"].apply(
+            lambda x: x if len(x) <= 10 else x[: 10] + '...'
+        )
         fig = px.bar(
-            qty,
+            agg,
             x="Qty Sold (t)",
             y="Auctioneer",
             orientation='h',
