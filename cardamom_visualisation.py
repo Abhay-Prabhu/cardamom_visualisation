@@ -24,7 +24,7 @@ def load_data(path="cardamom_price_dataset.csv"):
 # --- Plots ---
 
 def plot_avg_price_over_time(data):
-    fig, ax = plt.subplots(figsize=(12, 5))
+    fig, ax = plt.subplots(figsize=(14, 10))
     ax.plot("Date of Auction", "Avg.Price (Rs./Kg)", data=data, marker="o", lw=1.5)
     ax.set_title("Avg. Price of Cardamom Over Time")
     ax.set_xlabel("")
