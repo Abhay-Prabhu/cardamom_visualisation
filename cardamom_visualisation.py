@@ -439,7 +439,7 @@ def main():
                 automargin=True,
                 title_standoff=15
             ),
-            margin=dict(l=20, r=100, t=50, b=20),
+            margin=dict(l=20, r=20, t=50, b=20),
             dragmode='zoom', clickmode='event+select',
             title_font_color="#333333",
             font_color="#333333"
