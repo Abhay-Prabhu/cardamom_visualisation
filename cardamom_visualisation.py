@@ -298,27 +298,21 @@ def main():
 
     # 3️⃣ Monthly Trend per Year
     elif choice == "Monthly Trend per Year":
-        monthly_mean = (
-            data.groupby(["Year", "Month"], as_index=False)["Avg.Price (Rs./Kg)"].mean()
-        )
-        fig = px.line(
-            monthly_mean,
-            x="Month",
-            y="Avg.Price (Rs./Kg)",
-            color="Year",
-            title="Monthly Avg. Price Trend by Year",
-            labels={"Avg.Price (Rs./Kg)": "Price (Rs./Kg)", "Month": ""},
+        fig = px.box(
+            data,
+            x="Month", y="Avg.Price (Rs./Kg)", color="Month",
+            title="Monthly Price Distribution",
+            labels={"Avg.Price (Rs./Kg)": "Price (Rs./Kg)"},
             template="plotly_white",
-            markers=True,
-            category_orders={"Month": MONTH_ORDER},
-            color_discrete_sequence=px.colors.qualitative.Plotly
+            color_discrete_sequence=px.colors.qualitative.Set3,
+            points=False
         )
-        fig.update_traces(mode='lines+markers', hovertemplate='%{y:.0f}')
         fig.update_layout(
+            boxmode='group',
             xaxis=dict(gridcolor='LightGray', showgrid=True),
             yaxis=dict(gridcolor='LightGray', showgrid=True),
             dragmode='zoom', clickmode='event+select',
-            legend=dict(title='Year', orientation='v', y=0.5, x=1.02,
+            legend=dict(title='Month', orientation='v', y=0.5, x=1.02,
                         itemclick='toggle', itemdoubleclick='toggleothers'),
             title_font_color="#333333", font_color="#333333"
         )
