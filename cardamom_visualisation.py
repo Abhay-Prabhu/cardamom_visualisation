@@ -337,38 +337,29 @@ def main():
 
     # 4️⃣ Monthly Price Distribution
     elif choice == "Monthly Price Distribution":
-        # Aggregate to monthly means (one point per Year-Month)
-        monthly_mean = (
-            data
-            .groupby(["Year", "Month"], as_index=False)
-            ["Avg.Price (Rs./Kg)"]
-            .mean()
-        )
-        fig = px.line(
-            monthly_mean,
+        # Box plot with one box per month (no vertical scatter)
+        fig = px.box(
+            data,
             x="Month",
             y="Avg.Price (Rs./Kg)",
-            color="Year",
-            title="Monthly Avg. Price Trend by Year",
+            title="Monthly Price Distribution",
             labels={"Avg.Price (Rs./Kg)": "Price (Rs./Kg)", "Month": ""},
             template="plotly_white",
-            markers=True,
+            points=False,
             category_orders={"Month": MONTH_ORDER},
-            color_discrete_sequence=px.colors.qualitative.Plotly
         )
-        # Only connect monthly means (no vertical stacks)
-        fig.update_traces(mode='lines+markers')
+        # Style: hide x-grid, show y-grid, single color, no legend
+        fig.update_traces(marker_color='#4682B4')
         fig.update_layout(
-            xaxis=dict(showgrid=True, gridcolor='LightGray'),
-            yaxis=dict(showgrid=True, gridcolor='LightGray'),
+            xaxis=dict(showgrid=False, zeroline=False),
+            yaxis=dict(showgrid=True, gridcolor='LightGray', zeroline=False),
             dragmode='zoom',
             clickmode='event+select',
-            legend=dict(
-                title='Year', orientation='v', y=0.5, x=1.02,
-                itemclick='toggle', itemdoubleclick='toggleothers'
-            ),
+            showlegend=False,
             title_font_color="#333333",
-            font_color="#333333"
+            font_color="#333333",
+        )
+        st.plotly_chart(fig, use_container_width=True, config=config)
         )
         st.plotly_chart(fig, use_container_width=True, config=config)
 
