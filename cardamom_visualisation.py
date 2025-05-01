@@ -281,7 +281,7 @@ def main():
         )
         # Shorten long auctioneer names
         agg["Auctioneer_short"] = agg["Auctioneer"].apply(
-            lambda x: x if len(x) <= 30 else x[:27] + '...'
+            lambda x: x if len(x) <= 10 else x[: 10] + '...'
         )
 
         fig = px.bar(
