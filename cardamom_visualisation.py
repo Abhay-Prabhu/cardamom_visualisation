@@ -103,7 +103,7 @@
 #     df["Qty Sold (Kgs)"] = (
 #         df["Qty Sold (Kgs)"]
 #         .astype(str)
-#         .str.replace(",", "")                     # remove any commas
+#         .str.replace(",", "")                     # aremove any commas
 #     )
 #     df["Qty Sold (Kgs)"] = pd.to_numeric(df["Qty Sold (Kgs)"], errors="coerce").fillna(0)
 
@@ -279,24 +279,32 @@ def main():
             .sort_values(ascending=False)
             .reset_index()
         )
+        # Truncate or wrap long names
+        agg["Auctioneer_short"] = agg["Auctioneer"].apply(
+            lambda x: x if len(x) <= 40 else x[:37] + '...'
+        )
         fig = px.bar(
             agg,
             x="Avg.Price (Rs./Kg)",
-            y="Auctioneer",
+            y="Auctioneer_short",
             orientation='h',
             title="Auctioneer vs Avg. Price",
-            labels={"Avg.Price (Rs./Kg)": "Avg. Price (Rs./Kg)", "Auctioneer": ""},
+            labels={"Avg.Price (Rs./Kg)": "Avg. Price (Rs./Kg)", "Auctioneer_short": "Auctioneer"},
             template="plotly_white",
+            height=600,
         )
         fig.update_layout(
-            yaxis=dict(autorange="reversed"),
-            dragmode='zoom',
-            clickmode='event+select',
-            legend=dict(itemclick='toggle', itemdoubleclick='toggleothers'),
-            title_font_color="#333333",
-            font_color="#333333",
+            yaxis=dict(
+                autorange="reversed",
+                automargin=True,
+                tickfont=dict(size=10)
+            ),
+            xaxis=dict(tickformat=',.0f', automargin=True),
+            margin=dict(l=200, r=20, t=50, b=50),
+            dragmode='zoom', clickmode='event+select',
+            title_font_color="#333333", font_color="#333333"
         )
-        st.plotly_chart(fig, use_container_width=True, config=config)
+        st.plotly_chart(fig, use_container_width=True, config=config, key="auctioneer_vs_price")
 
     # 3️⃣ Monthly Trend per Year
     elif choice == "Monthly Trend per Year":
