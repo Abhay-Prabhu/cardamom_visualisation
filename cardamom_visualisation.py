@@ -281,7 +281,7 @@ def main():
         )
         # Truncate or wrap long names
         agg["Auctioneer_short"] = agg["Auctioneer"].apply(
-            lambda x: x if len(x) <= 40 else x[:37] + '...'
+            lambda x: x if len(x) <= 10 else x[:10] + '...'
         )
         fig = px.bar(
             agg,
