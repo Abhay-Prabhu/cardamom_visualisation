@@ -322,7 +322,7 @@ def main():
     # 4️⃣ Monthly Price Distribution
     elif choice == "Monthly Price Distribution":
         if choice == "Monthly Trend per Year":
-        fig = px.line(
+            fig = px.line(
             monthly_mean,
             x="Month",
             y="Avg.Price (Rs./Kg)",
@@ -336,9 +336,9 @@ def main():
             template="plotly_white",
             color_discrete_sequence=px.colors.qualitative.Plotly,
             category_orders={"Month": month_order}
-        )
-        fig.update_traces(mode='lines+markers')
-        fig.update_layout(
+            )
+            fig.update_traces(mode='lines+markers')
+            fig.update_layout(
             xaxis=dict(gridcolor='LightGray', showgrid=True),
             yaxis=dict(gridcolor='LightGray', showgrid=True),
             dragmode='zoom',
@@ -353,8 +353,8 @@ def main():
             ),
             title_font_color="#333333",
             font_color="#333333"
-        )
-        st.plotly_chart(fig, use_container_width=True, config=config)
+            )
+            st.plotly_chart(fig, use_container_width=True, config=config)
 
     # 5️⃣ Auctioneer-wise Qty Sold
     elif choice == "Auctioneer-wise Qty Sold":
