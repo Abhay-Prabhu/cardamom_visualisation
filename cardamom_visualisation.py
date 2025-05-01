@@ -195,6 +195,8 @@ st.set_page_config(
     initial_sidebar_state="collapsed",
 )
 
+MONTH_ORDER = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
+
 # --- Data loading ---
 # def load_data(path="cardamom_price_dataset.csv"):
 #     df = pd.read_csv(path)
