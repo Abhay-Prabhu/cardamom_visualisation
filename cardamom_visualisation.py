@@ -321,20 +321,38 @@ def main():
 
     # 4️⃣ Monthly Price Distribution
     elif choice == "Monthly Price Distribution":
-        fig = px.box(
-            data,
+        if choice == "Monthly Trend per Year":
+        fig = px.line(
+            monthly_mean,
             x="Month",
             y="Avg.Price (Rs./Kg)",
-            title="Monthly Price Distribution",
-            labels={"Avg.Price (Rs./Kg)": "Price (Rs./Kg)"},
+            color="Year",
+            markers=True,
+            title="Monthly Avg. Price Trend by Year",
+            labels={
+                "Avg.Price (Rs./Kg)": "Price (Rs./Kg)",
+                "Month": ""
+            },
             template="plotly_white",
+            color_discrete_sequence=px.colors.qualitative.Plotly,
+            category_orders={"Month": month_order}
         )
+        fig.update_traces(mode='lines+markers')
         fig.update_layout(
+            xaxis=dict(gridcolor='LightGray', showgrid=True),
+            yaxis=dict(gridcolor='LightGray', showgrid=True),
             dragmode='zoom',
             clickmode='event+select',
-            legend=dict(itemclick='toggle', itemdoubleclick='toggleothers'),
+            legend=dict(
+                title='Year',
+                orientation='v',
+                y=0.5,
+                x=1.02,
+                itemclick='toggle',
+                itemdoubleclick='toggleothers'
+            ),
             title_font_color="#333333",
-            font_color="#333333",
+            font_color="#333333"
         )
         st.plotly_chart(fig, use_container_width=True, config=config)
 
