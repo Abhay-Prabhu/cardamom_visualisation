@@ -6,7 +6,7 @@ import numpy as np
 
 # global styling
 sns.set_theme(style="whitegrid", palette="muted")
-plt.rcParams["figure.dpi"] = 100
+plt.rcParams["figure.dpi"] = 200
 
 from sklearn.linear_model import LinearRegression
 
