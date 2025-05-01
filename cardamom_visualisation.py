@@ -147,7 +147,11 @@ def plot_auctioneer_qty_sold(data):
 # --- Main App ---
 
 def main():
-    st.title("Cardamom Auction Price Analysis")
+    st.set_page_config(
+    page_title="Cardamom Auction Price Analysis",
+    layout="wide",              # ← edge-to-edge
+    initial_sidebar_state="collapsed",
+)
     data = load_data()
 
     st.sidebar.title("Choose a chart")
