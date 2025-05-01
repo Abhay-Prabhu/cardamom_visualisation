@@ -237,6 +237,7 @@ def get_plotly_config():
 # --- Main App ---
 def main():
     st.title("Cardamom Auction Price Analysis")
+    st.markdown("<br><br>", unsafe_allow_html=True)
     data = load_data()
 
     st.sidebar.title("Choose a chart")
