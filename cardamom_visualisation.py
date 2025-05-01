@@ -273,7 +273,7 @@ def main():
         st.plotly_chart(fig, use_container_width=True, config=config)
 
     # 2️⃣ Auctioneer vs Price
-    elif choice == "Auctioneer vs Price":
+    elif choice == "Auctioneer\n vs Price":
         agg = (
             data.groupby("Auctioneer")["Avg.Price (Rs./Kg)"].mean()
             .sort_values(ascending=False)
