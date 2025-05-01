@@ -319,7 +319,7 @@ def main():
         fig.update_traces(textposition='outside', textfont=dict(size=10), cliponaxis=False)
 
         fig.update_layout(
-            margin=dict(l=20, r=100, t=300, b=20),
+            margin=dict(l=20, r=100, t=100, b=20),
             yaxis=dict(
                 autorange="reversed",
                 automargin=True,
