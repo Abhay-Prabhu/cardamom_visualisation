@@ -417,7 +417,7 @@ def main():
             y="Auctioneer_short",
             orientation='h',
             text_auto='.1f',
-            title="Total Quantity Sold by Auctioneer (tonnes)",
+            title="\nTotal Quantity Sold by Auctioneer (tonnes)",
             labels={"Qty Sold (t)": "Qty Sold (t)", "Auctioneer_short": "Auctioneer"},
             template="plotly_white",
             height=600,
