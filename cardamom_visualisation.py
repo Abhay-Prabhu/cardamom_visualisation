@@ -321,40 +321,40 @@ def main():
 
     # 4️⃣ Monthly Price Distribution
     elif choice == "Monthly Price Distribution":
-        if choice == "Monthly Trend per Year":
-            fig = px.line(
+        # Aggregate to monthly means (one point per Year-Month)
+        monthly_mean = (
+            data
+            .groupby(["Year", "Month"], as_index=False)
+            ["Avg.Price (Rs./Kg)"]
+            .mean()
+        )
+        fig = px.line(
             monthly_mean,
             x="Month",
             y="Avg.Price (Rs./Kg)",
             color="Year",
-            markers=True,
             title="Monthly Avg. Price Trend by Year",
-            labels={
-                "Avg.Price (Rs./Kg)": "Price (Rs./Kg)",
-                "Month": ""
-            },
+            labels={"Avg.Price (Rs./Kg)": "Price (Rs./Kg)", "Month": ""},
             template="plotly_white",
-            color_discrete_sequence=px.colors.qualitative.Plotly,
-            category_orders={"Month": month_order}
-            )
-            fig.update_traces(mode='lines+markers')
-            fig.update_layout(
-            xaxis=dict(gridcolor='LightGray', showgrid=True),
-            yaxis=dict(gridcolor='LightGray', showgrid=True),
+            markers=True,
+            category_orders={"Month": MONTH_ORDER},
+            color_discrete_sequence=px.colors.qualitative.Plotly
+        )
+        # Only connect monthly means (no vertical stacks)
+        fig.update_traces(mode='lines+markers')
+        fig.update_layout(
+            xaxis=dict(showgrid=True, gridcolor='LightGray'),
+            yaxis=dict(showgrid=True, gridcolor='LightGray'),
             dragmode='zoom',
             clickmode='event+select',
             legend=dict(
-                title='Year',
-                orientation='v',
-                y=0.5,
-                x=1.02,
-                itemclick='toggle',
-                itemdoubleclick='toggleothers'
+                title='Year', orientation='v', y=0.5, x=1.02,
+                itemclick='toggle', itemdoubleclick='toggleothers'
             ),
             title_font_color="#333333",
             font_color="#333333"
-            )
-            st.plotly_chart(fig, use_container_width=True, config=config)
+        )
+        st.plotly_chart(fig, use_container_width=True, config=config)
 
     # 5️⃣ Auctioneer-wise Qty Sold
     elif choice == "Auctioneer-wise Qty Sold":
