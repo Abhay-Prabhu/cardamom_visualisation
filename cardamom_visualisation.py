@@ -391,37 +391,66 @@ def main():
     # 5️⃣ Auctioneer-wise Qty Sold
     elif choice == "Auctioneer-wise Qty Sold":
         tmp = data.copy()
-        tmp["Qty Sold (Kgs)"] = tmp["Qty Sold (Kgs)"].astype(str).str.replace(",", "")
+        # Clean and convert quantity column
+        tmp["Qty Sold (Kgs)"] = (
+            tmp["Qty Sold (Kgs)"].astype(str)
+            .str.replace(",", "")
+        )
         tmp["Qty Sold (Kgs)"] = pd.to_numeric(tmp["Qty Sold (Kgs)"], errors="coerce").fillna(0)
-        qty = tmp.groupby("Auctioneer")["Qty Sold (Kgs)"].sum().reset_index()
-        qty["Qty Sold (t)"] = qty["Qty Sold (Kgs)"] / 1000
-        agg = (
-            data.groupby("Quantity")["Avg.Price (Rs./Kg)"].mean()
-            .sort_values(ascending=False)
+
+        # Aggregate to total per auctioneer
+        qty = (
+            tmp.groupby("Auctioneer")["Qty Sold (Kgs)"].sum()
             .reset_index()
         )
+        qty["Qty Sold (t)"] = qty["Qty Sold (Kgs)"] / 1000
+
         # Shorten long auctioneer names
-        agg["Auctioneer_short"] = agg["Auctioneer"].apply(
-            lambda x: x if len(x) <= 10 else x[: 10] + '...'
+        qty["Auctioneer_short"] = qty["Auctioneer"].apply(
+            lambda x: x if len(x) <= 30 else x[:27] + '...'
         )
+
+        # Draw horizontal bar with values outside
         fig = px.bar(
-            agg,
+            qty,
             x="Qty Sold (t)",
-            y="Auctioneer",
+            y="Auctioneer_short",
             orientation='h',
+            text_auto='.1f',
             title="Total Quantity Sold by Auctioneer (tonnes)",
-            labels={"Qty Sold (t)": "Qty Sold (t)"},
+            labels={"Qty Sold (t)": "Qty Sold (t)", "Auctioneer_short": "Auctioneer"},
             template="plotly_white",
+            height=600,
         )
+        # Stretch x-axis and push text out
+        max_val = qty["Qty Sold (t)"].max() * 1.1
+        fig.update_xaxes(range=[0, max_val], automargin=True)
+        fig.update_traces(textposition='outside', textfont=dict(size=10), cliponaxis=False)
+
+        # Layout adjustments
         fig.update_layout(
-            yaxis=dict(autorange="reversed"),
-            dragmode='zoom',
-            clickmode='event+select',
-            legend=dict(itemclick='toggle', itemdoubleclick='toggleothers'),
+            yaxis=dict(
+                autorange="reversed",
+                automargin=True,
+                tickfont=dict(size=10)
+            ),
+            xaxis=dict(
+                tickformat=',.1f',
+                automargin=True,
+                title_standoff=15
+            ),
+            margin=dict(l=20, r=100, t=50, b=20),
+            dragmode='zoom', clickmode='event+select',
             title_font_color="#333333",
-            font_color="#333333",
+            font_color="#333333"
         )
-        st.plotly_chart(fig, use_container_width=True, config=config)
+
+        st.plotly_chart(
+            fig,
+            use_container_width=True,
+            config=config,
+            key="auctioneer_qty_sold"
+        )
 
 
 if __name__ == "__main__":
