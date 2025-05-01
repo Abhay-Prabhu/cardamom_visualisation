@@ -196,13 +196,30 @@ st.set_page_config(
 )
 
 # --- Data loading ---
+# def load_data(path="cardamom_price_dataset.csv"):
+#     df = pd.read_csv(path)
+#     df["Date of Auction"] = pd.to_datetime(df["Date of Auction"])
+#     df["Avg.Price (Rs./Kg)"] = pd.to_numeric(df["Avg.Price (Rs./Kg)"], errors="coerce")
+#     df["Year"] = df["Date of Auction"].dt.year
+#     df["Month"] = df["Date of Auction"].dt.month_name().str.slice(stop=3)
+#     return df.sort_values("Date of Auction")
+
+# --- Data loading ---
 def load_data(path="cardamom_price_dataset.csv"):
     df = pd.read_csv(path)
     df["Date of Auction"] = pd.to_datetime(df["Date of Auction"])
     df["Avg.Price (Rs./Kg)"] = pd.to_numeric(df["Avg.Price (Rs./Kg)"], errors="coerce")
     df["Year"] = df["Date of Auction"].dt.year
+
+    # Abbreviate month names to three letters
     df["Month"] = df["Date of Auction"].dt.month_name().str.slice(stop=3)
-    return df.sort_values("Date of Auction")
+
+    # Ensure Month column is Categorical with correct ordering
+    month_order = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
+    df["Month"] = pd.Categorical(df["Month"], categories=month_order, ordered=True)
+
+    # Sort by year then month
+    return df.sort_values(["Year", "Month"])
 
 # common plotly config for interactivity
 def get_plotly_config():
