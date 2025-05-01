@@ -359,9 +359,7 @@ def main():
             title_font_color="#333333",
             font_color="#333333",
         )
-        st.plotly_chart(fig, use_container_width=True, config=config)
-        
-        st.plotly_chart(fig, use_container_width=True, config=config)
+        st.plotly_chart(fig, use_container_width=True, config=config,  key="monthly_price_distribution")
 
     # 5️⃣ Auctioneer-wise Qty Sold
     elif choice == "Auctioneer-wise Qty Sold":
