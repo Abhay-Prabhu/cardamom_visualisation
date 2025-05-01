@@ -298,22 +298,36 @@ def main():
 
     # 3️⃣ Monthly Trend per Year
     elif choice == "Monthly Trend per Year":
-        fig = px.box(
-            data,
-            x="Month", y="Avg.Price (Rs./Kg)", color="Month",
-            title="Monthly Price Distribution",
-            labels={"Avg.Price (Rs./Kg)": "Price (Rs./Kg)"},
-            template="plotly_white",
-            color_discrete_sequence=px.colors.qualitative.Set3,
-            points=False
+        # Pre-aggregate to get one mean per Year-Month
+        monthly_mean = (
+            data.groupby(["Year", "Month"], as_index=False)["Avg.Price (Rs./Kg)"].mean()
         )
-        # only horizontal grid lines, no vertical grid lines
+        # Replace categorical Month with numeric month index for plotting
+        monthly_mean["Month_Num"] = monthly_mean["Month"].apply(lambda m: MONTH_ORDER.index(m) + 1)
+
+        fig = px.line(
+            monthly_mean,
+            x="Month_Num",
+            y="Avg.Price (Rs./Kg)",
+            color="Year",
+            markers=True,
+            title="Monthly Avg. Price Trend by Year",
+            labels={"Avg.Price (Rs./Kg)": "Price (Rs./Kg)", "Month_Num": ""},
+            template="plotly_white",
+            color_discrete_sequence=px.colors.qualitative.Plotly
+        )
+        fig.update_traces(mode='lines+markers', hovertemplate='%{y:.0f}')
         fig.update_layout(
-            boxmode='group',
-            xaxis=dict(showgrid=False, zeroline=False),
+            xaxis=dict(
+                tickmode='array',
+                tickvals=list(range(1,13)),
+                ticktext=MONTH_ORDER,
+                gridcolor='LightGray',
+                showgrid=True
+            ),
             yaxis=dict(gridcolor='LightGray', showgrid=True),
             dragmode='zoom', clickmode='event+select',
-            legend=dict(title='Month', orientation='v', y=0.5, x=1.02,
+            legend=dict(title='Year', orientation='v', y=0.5, x=1.02,
                         itemclick='toggle', itemdoubleclick='toggleothers'),
             title_font_color="#333333", font_color="#333333"
         )
