@@ -281,31 +281,25 @@ def main():
 
     # 3️⃣ Monthly Trend per Year
     elif choice == "Monthly Trend per Year":
-        color_seq = px.colors.qualitative.Set3
-        fig = px.box(
+        fig = px.line(
             data,
-            x="Month",
-            y="Avg.Price (Rs./Kg)",
-            color="Month",
-            title="Monthly Price Distribution",
+            x="Month", y="Avg.Price (Rs./Kg)", color="Year",
+            title="Monthly Avg. Price Trend by Year",
             labels={"Avg.Price (Rs./Kg)": "Price (Rs./Kg)", "Month": ""},
             template="plotly_white",
-            color_discrete_sequence=color_seq,
-            points="all",
+            markers=True,
+            category_orders={"Month": data["Month"].cat.categories.tolist()},
+            color_discrete_sequence=px.colors.qualitative.Plotly
         )
-        # Style layout: darker text, light grid lines
+        fig.update_traces(mode='lines+markers')
         fig.update_layout(
-            boxmode='group',
-            dragmode='zoom',
-            clickmode='event+select',
-            legend=dict(title='Month', itemclick='toggle', itemdoubleclick='toggleothers'),
-            title_font_color="#333333",
-            font_color="#333333",
+            xaxis=dict(gridcolor='LightGray', showgrid=True),
+            yaxis=dict(gridcolor='LightGray', showgrid=True),
+            dragmode='zoom', clickmode='event+select',
+            legend=dict(title='Year', orientation='v', y=0.5, x=1.02,
+                        itemclick='toggle', itemdoubleclick='toggleothers'),
+            title_font_color="#333333", font_color="#333333",
         )
-        # Customize axes grid and ticks for clarity
-        fig.update_xaxes(showgrid=True, gridwidth=1, gridcolor='LightGray', tickfont_color="#333333")
-        fig.update_yaxes(showgrid=True, gridwidth=1, gridcolor='LightGray', title_font_color="#333333", tickfont_color="#333333")
-
         st.plotly_chart(fig, use_container_width=True, config=config)
 
     # 4️⃣ Monthly Price Distribution
