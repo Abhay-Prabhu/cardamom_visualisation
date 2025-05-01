@@ -279,32 +279,51 @@ def main():
             .sort_values(ascending=False)
             .reset_index()
         )
-        # Truncate or wrap long names
+        # Shorten long auctioneer names
         agg["Auctioneer_short"] = agg["Auctioneer"].apply(
-            lambda x: x if len(x) <= 10 else x[:10] + '...'
+            lambda x: x if len(x) <= 30 else x[:27] + '...'
         )
+
         fig = px.bar(
             agg,
             x="Avg.Price (Rs./Kg)",
             y="Auctioneer_short",
             orientation='h',
+            text_auto='.0f',            # show values on bars
             title="Auctioneer vs Avg. Price",
             labels={"Avg.Price (Rs./Kg)": "Avg. Price (Rs./Kg)", "Auctioneer_short": "Auctioneer"},
             template="plotly_white",
             height=600,
         )
+
+        # Extend x-axis to fill width and push values outside
+        max_val = agg["Avg.Price (Rs./Kg)"].max() * 1.1
+        fig.update_xaxes(range=[0, max_val], automargin=True)
+        fig.update_traces(textposition='outside', textfont=dict(size=10))
+
         fig.update_layout(
             yaxis=dict(
                 autorange="reversed",
                 automargin=True,
                 tickfont=dict(size=10)
             ),
-            xaxis=dict(tickformat=',.0f', automargin=True),
-            margin=dict(l=200, r=20, t=50, b=50),
+            xaxis=dict(
+                tickformat=',.0f',
+                automargin=True,
+                title_standoff=15
+            ),
+            margin=dict(l=150, r=20, t=50, b=50),
             dragmode='zoom', clickmode='event+select',
-            title_font_color="#333333", font_color="#333333"
+            title_font_color="#333333",
+            font_color="#333333"
         )
-        st.plotly_chart(fig, use_container_width=True, config=config, key="auctioneer_vs_price")
+
+        st.plotly_chart(
+            fig,
+            use_container_width=True,
+            config=config,
+            key="auctioneer_vs_price"
+        )
 
     # 3️⃣ Monthly Trend per Year
     elif choice == "Monthly Trend per Year":
