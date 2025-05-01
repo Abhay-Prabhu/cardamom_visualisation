@@ -307,9 +307,10 @@ def main():
             color_discrete_sequence=px.colors.qualitative.Set3,
             points=False
         )
+        # only horizontal grid lines, no vertical grid lines
         fig.update_layout(
             boxmode='group',
-            xaxis=dict(gridcolor='LightGray', showgrid=True),
+            xaxis=dict(showgrid=False, zeroline=False),
             yaxis=dict(gridcolor='LightGray', showgrid=True),
             dragmode='zoom', clickmode='event+select',
             legend=dict(title='Month', orientation='v', y=0.5, x=1.02,
