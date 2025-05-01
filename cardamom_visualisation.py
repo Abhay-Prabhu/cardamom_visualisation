@@ -360,7 +360,7 @@ def main():
             font_color="#333333",
         )
         st.plotly_chart(fig, use_container_width=True, config=config)
-        )
+        
         st.plotly_chart(fig, use_container_width=True, config=config)
 
     # 5️⃣ Auctioneer-wise Qty Sold
