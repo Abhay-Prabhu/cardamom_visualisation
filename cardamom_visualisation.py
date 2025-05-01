@@ -299,7 +299,7 @@ def main():
         # Extend x-axis to fill width and push values outside
         max_val = agg["Avg.Price (Rs./Kg)"].max() * 1.1
         fig.update_xaxes(range=[0, max_val], automargin=True)
-        fig.update_traces(textposition='outside', textfont=dict(size=10))
+        fig.update_traces(textposition='outside', textfont=dict(size=10), cliponaxis=False)
 
         fig.update_layout(
             yaxis=dict(
