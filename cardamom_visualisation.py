@@ -273,7 +273,7 @@ def main():
         st.plotly_chart(fig, use_container_width=True, config=config)
 
     # 2️⃣ Auctioneer vs Price
-    elif choice == "Auctioneer\n vs Price":
+    elif choice == "Auctioneer vs Price":
         agg = (
             data.groupby("Auctioneer")["Avg.Price (Rs./Kg)"].mean()
             .sort_values(ascending=False)
@@ -290,7 +290,7 @@ def main():
             y="Auctioneer_short",
             orientation='h',
             text_auto='.0f',            # show values on bars
-            title="Auctioneer vs Avg. Price",
+            title="Auctioneer\n vs Avg. Price",
             labels={"Avg.Price (Rs./Kg)": "Avg. Price (Rs./Kg)", "Auctioneer_short": "Auctioneer"},
             template="plotly_white",
             height=600,
