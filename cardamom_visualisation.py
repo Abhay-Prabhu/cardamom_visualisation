@@ -227,7 +227,7 @@ def load_data(path="cardamom_price_dataset.csv"):
 def get_plotly_config():
     return {
         'scrollZoom': True,
-        'displayModeBar': True,
+        'displayModeBar': 'hover',
         'modeBarButtonsToAdd': [
             'zoomIn2d', 'zoomOut2d', 'zoom2d',
             'pan2d', 'select2d', 'lasso2d'
