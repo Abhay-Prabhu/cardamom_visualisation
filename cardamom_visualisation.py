@@ -193,32 +193,32 @@ if __name__ == "__main__":
 
 
 
-import pandas as pd
-import streamlit as st
-import plotly.express as px
+# import pandas as pd
+# import streamlit as st
+# import plotly.express as px
 
 # --- Page config ---
-st.set_page_config(
-    page_title="Cardamom Auction Price Analysis",
-    layout="wide",
-    initial_sidebar_state="collapsed",
-)
+# st.set_page_config(
+#     page_title="Cardamom Auction Price Analysis",
+#     layout="wide",
+#     initial_sidebar_state="collapsed",
+# )
 
 # Inject CSS to push content below the Streamlit header and hide the default header/menu
-st.markdown(
-    '''
-    <style>
-    /* Add top padding so the appbar doesn’t overlap */
-    .reportview-container .main .block-container {
-        padding-top: 70px;
-    }
-    /* Hide Streamlit's header and menu for a cleaner view */
-    header {visibility: hidden;}
-    #MainMenu {visibility: hidden;}
-    </style>
-    '''
-    , unsafe_allow_html=True
-)
+# st.markdown(
+#     '''
+#     <style>
+#     /* Add top padding so the appbar doesn’t overlap */
+#     .reportview-container .main .block-container {
+#         padding-top: 70px;
+#     }
+#     /* Hide Streamlit's header and menu for a cleaner view */
+#     header {visibility: hidden;}
+#     #MainMenu {visibility: hidden;}
+#     </style>
+#     '''
+#     , unsafe_allow_html=True
+# )
 
 MONTH_ORDER = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
 
