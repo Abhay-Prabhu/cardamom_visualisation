@@ -7,6 +7,11 @@ import numpy as np
 # global styling
 sns.set_theme(style="whitegrid", palette="muted")
 plt.rcParams["figure.dpi"] = 200
+st.set_page_config(
+    page_title="Cardamom Auction Price Analysis",
+    layout="wide",
+    initial_sidebar_state="collapsed",
+)
 
 from sklearn.linear_model import LinearRegression
 
@@ -161,7 +166,7 @@ def main():
             "Avg Price Over Time",
             "Auctioneer vs Price",
             "Monthly Trend per Year",
-            "Monthly Price Distribution",
+            # "Monthly Price Distribution",
             "Auctioneer-wise Qty Sold",
         ]
     )
@@ -172,8 +177,8 @@ def main():
         plot_auctioneer_vs_price(data)
     elif choice == "Monthly Trend per Year":
         plot_monthly_trend_per_year(data)
-    elif choice == "Monthly Price Distribution":
-        plot_monthly_price_distribution(data)
+    # elif choice == "Monthly Price Distribution":
+    #     plot_monthly_price_distribution(data)
     elif choice == "Auctioneer-wise Qty Sold":
         plot_auctioneer_qty_sold(data)
 
