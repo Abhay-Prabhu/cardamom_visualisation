@@ -3,7 +3,11 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import streamlit as st
 import numpy as np
-
+st.set_page_config(
+    page_title="Cardamom Auction Price Analysis",
+    layout="wide",
+    initial_sidebar_state="collapsed",
+)
 # global styling
 sns.set_theme(style="whitegrid", palette="muted")
 plt.rcParams["figure.dpi"] = 200
